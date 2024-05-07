@@ -1,10 +1,20 @@
 on:
   push:
     branches: [ "main" ]
-    workflow_dispatch:
+name: 🚀 Deploy website on push
 jobs:
-  deployment:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-    environment: production
     steps:
-      - name: deploy
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ftp.nameofserver.com
+        username: myFtpUserName
+        password: ${{ secrets.ftp_password }}
+        protocol: ftps
+        port: 1234 # todo replace with your web hosts ftps port
